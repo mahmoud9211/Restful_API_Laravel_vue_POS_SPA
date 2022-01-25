@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\employeesController;
+use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SuppliersController;
 
@@ -44,6 +45,9 @@ Route::apiResource('/categories',CategoriesController::class);
 Route::apiResource('/products',ProductsController::class);
 
 Route::apiResource('/customers',CustomersController::class);
+
+Route::apiResource('/expenses',ExpensesController::class);
+
 
 
 

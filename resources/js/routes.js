@@ -26,6 +26,10 @@ let customers = require('./components/customers/index.vue').default;
 let customersCreate = require('./components/customers/create.vue').default;
 let editCustomers = require('./components/customers/edit.vue').default;
 
+let expenses = require('./components/expenses/index.vue').default;
+let expensesCreate = require('./components/expenses/create.vue').default;
+let editExpenses = require('./components/expenses/edit.vue').default;
+
 
 
 
@@ -72,6 +76,12 @@ export const routes = [
      { path: '/customers', component: customers , name : 'customers' },
      { path: '/customers/create', component: customersCreate , name : 'customersCreate' },
      { path: '/customers/edit/:id', component: editCustomers , name : 'editCustomers' },
+
+      //expenses
+
+      { path: '/expenses', component: expenses , name : 'expenses' },
+      { path: '/expenses/create', component: expensesCreate , name : 'expensesCreate' },
+      { path: '/expenses/edit/:id', component: editExpenses , name : 'editExpenses' },
 
 
 
