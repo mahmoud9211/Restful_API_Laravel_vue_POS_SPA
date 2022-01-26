@@ -30,6 +30,11 @@ let expenses = require('./components/expenses/index.vue').default;
 let expensesCreate = require('./components/expenses/create.vue').default;
 let editExpenses = require('./components/expenses/edit.vue').default;
 
+let stock = require('./components/stock/index.vue').default;
+let editStock = require('./components/stock/edit.vue').default;
+
+
+
 
 
 
@@ -82,6 +87,16 @@ export const routes = [
       { path: '/expenses', component: expenses , name : 'expenses' },
       { path: '/expenses/create', component: expensesCreate , name : 'expensesCreate' },
       { path: '/expenses/edit/:id', component: editExpenses , name : 'editExpenses' },
+
+      //stock
+      { path: '/stock', component: stock , name : 'stock' },
+      { path: '/stock/edit/:id', component: editStock , name : 'editStock' },
+
+
+
+     
+
+
 
 
 

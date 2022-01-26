@@ -10,4 +10,6 @@ class employee extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+   
 }

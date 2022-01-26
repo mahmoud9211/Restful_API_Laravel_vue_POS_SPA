@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Models\category;
 use App\Models\product;
+use App\Models\supplier;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
@@ -143,4 +145,6 @@ class ProductsController extends Controller
 
         
     }
+
+    
 }

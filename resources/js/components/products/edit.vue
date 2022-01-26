@@ -252,10 +252,10 @@ export default {
       .then(({data})=> (this.form = data))
       .catch( console.log('error'))
 
-       axios.get('/api/categories')
+       axios.get('/api/category/get')
       .then(({data}) => this.categories = data)
 
-      axios.get('/api/suppliers')
+      axios.get('/api/supplier/get')
       .then(({data}) => this.suppliers = data)
 
   }}
