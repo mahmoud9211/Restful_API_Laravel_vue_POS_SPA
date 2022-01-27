@@ -33,6 +33,9 @@ let editExpenses = require('./components/expenses/edit.vue').default;
 let stock = require('./components/stock/index.vue').default;
 let editStock = require('./components/stock/edit.vue').default;
 
+let pos = require('./components/pos/pos.vue').default;
+
+
 
 
 
@@ -91,6 +94,11 @@ export const routes = [
       //stock
       { path: '/stock', component: stock , name : 'stock' },
       { path: '/stock/edit/:id', component: editStock , name : 'editStock' },
+
+      //pos
+
+      { path: '/pos', component: pos , name : 'pos' },
+
 
 
 

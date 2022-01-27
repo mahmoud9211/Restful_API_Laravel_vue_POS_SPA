@@ -8,6 +8,7 @@ use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\employeesController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\HelperController;
+use App\Http\Controllers\PosController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SuppliersController;
 
@@ -54,6 +55,11 @@ Route::post('/quantity/update/{id}',[HelperController::class,'quantity_update'])
 Route::apiResource('/customers',CustomersController::class);
 
 Route::apiResource('/expenses',ExpensesController::class);
+
+Route::get('/pos/products',[PosController::class,'products']);
+Route::get('/pos/category/products/{id}',[PosController::class,'products_by_categories']);
+
+
 
 
 

@@ -59,6 +59,15 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
+            <li class="nav-item active">
+                <router-link class="nav-link" to="/pos">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>POS</span></router-link>
+            </li>
+
+            <hr class="sidebar-divider">
+
+
             <!-- Heading -->
             <div class="sidebar-heading">
                 Interface
