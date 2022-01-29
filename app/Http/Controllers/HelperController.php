@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\category;
+use App\Models\customer;
 use App\Models\product;
 use App\Models\supplier;
 use Illuminate\Http\Request;
@@ -21,6 +22,12 @@ class HelperController extends Controller
         return response()->json($data);
     }
 
+    public function customer()
+    {
+        $data = customer::get();
+        return response()->json($data);
+    }
+
     public function quantity_update(Request $request,$id)
     {
         $validation = $request->validate([
@@ -31,4 +38,5 @@ class HelperController extends Controller
            'qty' => $request->qty
         ]);
     }
+
 }

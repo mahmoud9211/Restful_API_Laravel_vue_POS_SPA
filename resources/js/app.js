@@ -35,8 +35,7 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 
 
 
-
-
+window.Reload = new Vue();
 
 
 const router = new VueRouter({
@@ -48,6 +47,7 @@ const router = new VueRouter({
   //sweet alert
 
   import Swal from 'sweetalert2'
+import Vue from 'vue';
 
   window.Swal = Swal
 

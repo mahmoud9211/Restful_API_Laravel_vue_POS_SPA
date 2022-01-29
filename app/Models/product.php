@@ -22,6 +22,11 @@ class product extends Model
         return $this->belongsTo(supplier::class);
     }
 
+    public function cart()
+    {
+        return $this->hasMany(cart::class);
+    }
+
     public function getProfitPercentageAttribute()
     {
         $profit = $this->selling_price - $this->purchase_price;

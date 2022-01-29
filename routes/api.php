@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\employeesController;
@@ -48,6 +49,8 @@ Route::apiResource('/products',ProductsController::class);
 
 Route::get('/category/get',[HelperController::class,'category']);
 Route::get('/supplier/get',[HelperController::class,'supplier']);
+Route::get('/customer/get',[HelperController::class,'customer']);
+
 Route::post('/quantity/update/{id}',[HelperController::class,'quantity_update']);
 
 
@@ -58,6 +61,22 @@ Route::apiResource('/expenses',ExpensesController::class);
 
 Route::get('/pos/products',[PosController::class,'products']);
 Route::get('/pos/category/products/{id}',[PosController::class,'products_by_categories']);
+
+Route::get('/cart/add/{id}',[CartController::class,'add']);
+Route::get('/cart/get',[CartController::class,'getContent']);
+Route::get('/cart/remove/{id}',[CartController::class,'remove']);
+Route::get('/cart/increment/{id}',[CartController::class,'increment']);
+Route::get('/cart/decrement/{id}',[CartController::class,'decrement']);
+
+
+
+
+
+
+
+
+
+
 
 
 

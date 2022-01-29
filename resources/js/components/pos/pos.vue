@@ -48,18 +48,19 @@
            <br>
                     <div class="row">
          <div class="col-lg-3 col-md-3 col-sm-6 col-6 d-flex align-self-stretch" style="margin-bottom:10px;" v-for="product in search" :key="product.id">
-
    <div class="card " style="width: 8rem;">
+             <button class="btn btn-sm" @click.prevent="addToCart(product.id)" >
   <img class="card-img-top" :src="product.image">
-  <div class="card-body">
-
+  <div class="card-body" >
        <h6 class="card-title">{{ product.name }}</h6>
+             
        <span class="badge badge-success" v-if="product.qty  > 0 ">Available </span> 
     <span class="badge badge-danger" v-else>Stock Out </span> 
 
   </div>
-</div>
+               </button>
 
+</div>
                         </div>
                     </div>
                 </div>
@@ -123,16 +124,17 @@
                     </thead>
                     <tbody>
 
-          <tr>
-            <td>product name</td>
-            <td><input type="text" readonly="" style="width: 15px;" >
-       <button  class="btn btn-sm btn-success">+</button>
-   <button   class="btn btn-sm btn-danger" >-</button>
+          <tr v-for="cart in carts" :key="cart.id">
+            <td>{{cart.product.name}}</td>
+            <td><input type="text" readonly="" style="width: 25px;" :value="cart.qty" >
+       <button  class="btn btn-sm btn-success" @click.prevent="increment(cart.id)">+</button>
+   <button  class="btn btn-sm btn-danger" @click.prevent="decrement(cart.id)" v-if="cart.qty >= 2" >-</button>
+   <button  class="btn btn-sm btn-danger" @click.prevent="decrement(cart.id)" v-else disabled>-</button>
 
             </td>
-            <td>60</td>
-            <td>90</td>
-   <td><a  class="btn btn-sm btn-primary"><font color="#ffffff">X</font></a></td>
+            <td>{{cart.price}}</td>
+            <td>{{cart.sub_total}}</td>
+   <td><a @click="removePro(cart.id)"  class="btn btn-sm btn-primary"><font color="#ffffff">X</font></a></td>
           </tr>
                       
                        
@@ -145,17 +147,17 @@
   <div class="card-footer">
             <ul class="list-group">
   <li class="list-group-item d-flex justify-content-between align-items-center">Total Quantity:
-  <strong>7</strong>
+  <strong>{{ quantity }}</strong>
    </li>
      <li class="list-group-item d-flex justify-content-between align-items-center">Sub Total:
-  <strong>90 $</strong>
+  <strong>{{subTotal}} $</strong>
    </li>
 
      <li class="list-group-item d-flex justify-content-between align-items-center">Vat:
-  <strong>5 %</strong>
+  <strong>10 %</strong>
    </li>
      <li class="list-group-item d-flex justify-content-between align-items-center">Total :
-  <strong>10 $</strong>
+  <strong> {{subTotal + (subTotal*0.1)}} $</strong>
    </li> 
               
             </ul>   
@@ -164,7 +166,8 @@
         <form >
           <label>Customer Name</label>
           <select class="form-control" >
-         <option>mahmoud </option>
+            <option value="" disabled selected> Choose </option>
+         <option :value="customer.id" v-for="customer in customers" :key="customer.id">{{customer.name}}</option>
                  
            </select>
 
@@ -175,7 +178,7 @@
            <input type="text" class="form-control" required="" >
 
           <label>Pay By</label>
-          <select class="form-control" v-model="payby">
+          <select class="form-control">
                  <option value="HandCash">Hand Cash </option>
                  <option value="Cheaque">Cheaque </option>
                  <option value="GiftCard">Gift Card </option>
@@ -234,8 +237,23 @@ export default {
           filter: '',
           itemSearch: '',
           categories: '',
-          categoriesProducts:[]
+          categoriesProducts:[],
+          customers: '',
+          carts: [],
+          
       }
+  },
+    created(){
+     this.allProducts();
+     this.allCategories();
+     this.allCustomers();
+      this.getCartContent();
+     Reload.$on('AfterAdd',()=>{
+       this.getCartContent();
+     })
+
+
+
   },
   methods:{
 
@@ -256,14 +274,55 @@ export default {
           axios.get('/api/pos/category/products/'+id)
           .then(({data}) => (this.categoriesProducts = data))
           .catch()
-      }
+      },
+      allCustomers()
+      {
+        axios.get('/api/customer/get')
+        .then(({data}) => this.customers = data)
+      },
+      addToCart(id)
+      {
+        axios.get('/api/cart/add/'+id)
+        .then(()=>{
+          Reload.$emit('AfterAdd');
+          Toastermsg.successmsg('Added To Cart')
+
+        })
+
+    
+      },
+      getCartContent()
+      {
+        axios.get('/api/cart/get')
+        .then(({data}) => this.carts = data)
+      },
+      removePro(id)
+      {
+        axios.get('/api/cart/remove/'+id)
+        .then(()=>{
+        Reload.$emit('AfterAdd');
+        }) 
+      },
+      increment(id)
+      {
+        axios.get('/api/cart/increment/'+id)
+         .then(()=>{
+        Reload.$emit('AfterAdd');
+        }) 
+      },
+       decrement(id)
+      {
+        axios.get('/api/cart/decrement/'+id)
+         .then(()=>{
+        Reload.$emit('AfterAdd');
+        }) 
+      },
+ 
+
      
      
   },
-  created(){
-     this.allProducts();
-     this.allCategories();
-  },computed:{
+computed:{
        search()
       {
          return this.products.filter(product => {
@@ -277,6 +336,24 @@ export default {
 
           return categoriesProduct.name.toLowerCase().match(this.itemSearch.toLowerCase())
          });
+      } ,
+      quantity()
+      {
+       let sum = 0;
+       for(let i = 0; i < this.carts.length ; i++){
+         sum += (parseFloat(this.carts[i].qty));
+       }
+       return sum;
+      },
+
+      subTotal()
+      {
+        let sum = 0;
+        for(let i = 0; i < this.carts.length ; i++)
+        {
+          sum += (parseFloat(this.carts[i].sub_total));
+        }
+        return sum;
       }
       
   }
