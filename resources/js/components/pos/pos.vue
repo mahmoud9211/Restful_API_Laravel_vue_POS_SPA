@@ -132,7 +132,7 @@
    <button  class="btn btn-sm btn-danger" @click.prevent="decrement(cart.id)" v-else disabled>-</button>
 
             </td>
-            <td>{{cart.price}}</td>
+            <td >{{cart.price}}</td>
             <td>{{cart.sub_total}}</td>
    <td><a @click="removePro(cart.id)"  class="btn btn-sm btn-primary"><font color="#ffffff">X</font></a></td>
           </tr>
@@ -163,24 +163,24 @@
             </ul>   
             <br> 
 
-        <form >
+        <form @submit.prevent="orderDone">
           <label>Customer Name</label>
-          <select class="form-control" >
+          <select class="form-control" v-model="customer_id" >
             <option value="" disabled selected> Choose </option>
-         <option :value="customer.id" v-for="customer in customers" :key="customer.id">{{customer.name}}</option>
+         <option  :value="customer.id" v-for="customer in customers" :key="customer.id">{{customer.name}}</option>
                  
            </select>
 
            <label>Pay</label>
-           <input type="text" class="form-control" required="" >
+           <input type="text" class="form-control" required="" v-model="pay" >
 
            <label>Due</label>
-           <input type="text" class="form-control" required="" >
+           <input type="text" class="form-control" required="" v-model="due" >
 
           <label>Pay By</label>
-          <select class="form-control">
-                 <option value="HandCash">Hand Cash </option>
-                 <option value="Cheaque">Cheaque </option>
+          <select class="form-control" v-model="payment_method">
+                 <option value="HandCash">Cash </option>
+                 <option value="visa-master">Visa/MasterCard </option>
                  <option value="GiftCard">Gift Card </option>
            </select>
 
@@ -240,6 +240,10 @@ export default {
           categoriesProducts:[],
           customers: '',
           carts: [],
+          customer_id: '',
+          pay: '',
+          due: '',
+          payment_method: ''
           
       }
   },
@@ -317,6 +321,19 @@ export default {
         Reload.$emit('AfterAdd');
         }) 
       },
+      orderDone()
+      {
+        let total = this.subTotal + (this.subTotal*0.1);
+        var data = {quantity:this.quantity,subTotal:this.subTotal,customer_id:this.customer_id,
+        due:this.due,pay:this.pay,payment_method:this.payment_method,total:total};
+
+        axios.post('/api/order/done',data)
+        .then(()=>{
+          Toastermsg.successmsg('Order Done')
+          this.$router.push({name:'home'})
+        })
+
+      }
  
 
      

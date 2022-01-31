@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderRequest;
 use App\Models\cart;
+use App\Models\order;
 use App\Models\product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -74,5 +78,51 @@ class CartController extends Controller
         ]);
     }
 
-   
+   public function order_insert (OrderRequest $request)
+   {
+       $validation = $request->validated();
+
+     $order =  order::create([
+           'customer_id' => $request->customer_id,
+           'qty' => $request->quantity,
+           'subtotal' => $request->subTotal,
+           'total' => $request->total,
+           'vat' => 10,
+           'payment_method' => $request->payment_method,
+           'pay' => $request->pay,
+           'due' => $request->due,
+           'order_date' => Carbon::now(),
+           'order_month' => date('F'),
+           'order_year' => date('Y'),
+
+       ]);
+
+       $products = cart::get();
+
+       foreach($products as $product)
+       {
+           $order->product()->attach($product->product_id);
+       
+             
+           $qty =  product::findOrFail($product->product_id)->qty;
+
+           product::findOrFail($product->product_id)->update([
+                'qty' =>  $qty - $product->qty
+           ]);
+
+           DB::table('order_product')->where('product_id',$product->product_id)->update([
+               'qty' => $product->qty
+           ]);
+       }
+      
+       //to empty the cart
+       cart::truncate();
+       
+
+
+
+      
+       
+     
+   }
 }

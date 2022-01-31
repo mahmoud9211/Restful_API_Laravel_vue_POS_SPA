@@ -68,6 +68,9 @@ Route::get('/cart/remove/{id}',[CartController::class,'remove']);
 Route::get('/cart/increment/{id}',[CartController::class,'increment']);
 Route::get('/cart/decrement/{id}',[CartController::class,'decrement']);
 
+Route::post('/order/done',[CartController::class,'order_insert']);
+
+
 
 
 
