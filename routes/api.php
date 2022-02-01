@@ -9,6 +9,7 @@ use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\employeesController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\HelperController;
+use App\Http\Controllers\ordersController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SuppliersController;
@@ -69,6 +70,22 @@ Route::get('/cart/increment/{id}',[CartController::class,'increment']);
 Route::get('/cart/decrement/{id}',[CartController::class,'decrement']);
 
 Route::post('/order/done',[CartController::class,'order_insert']);
+
+Route::get('/orders/today',[ordersController::class,'orders_today']);
+
+Route::get('/order/details/{id}',[ordersController::class,'order_details']);
+Route::get('/order/orderdetails/{id}',[ordersController::class,'details']);
+
+Route::get('/today/sell',[ordersController::class,'today_sell']);
+Route::get('/today/income',[ordersController::class,'today_income']);
+Route::get('/today/due',[ordersController::class,'today_due']);
+Route::get('/today/expense',[ordersController::class,'details']);
+
+
+
+
+
+
 
 
 

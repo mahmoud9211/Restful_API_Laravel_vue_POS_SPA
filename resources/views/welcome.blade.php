@@ -191,6 +191,23 @@
                 </div>
             </li>
 
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages5"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Orders</span>
+                </a>
+                <div id="collapsePages5" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <router-link class="collapse-item" to="/orders/today">Today's Orders</router-link>
+
+                        <router-link class="collapse-item" to="/expenses/create">Search</router-link>
+                        
+                    </div>
+                </div>
+            </li>
+
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">

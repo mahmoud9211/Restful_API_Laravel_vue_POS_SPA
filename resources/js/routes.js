@@ -35,6 +35,11 @@ let editStock = require('./components/stock/edit.vue').default;
 
 let pos = require('./components/pos/pos.vue').default;
 
+let today = require('./components/orders/today.vue').default;
+let orderDetails = require('./components/orders/details.vue').default;
+
+
+
 
 
 
@@ -98,6 +103,13 @@ export const routes = [
       //pos
 
       { path: '/pos', component: pos , name : 'pos' },
+
+        //orders
+
+        { path: '/orders/today', component: today , name : 'today' },
+        { path: '/orders/details/:id', component: orderDetails , name : 'orderDetails' },
+
+        
 
 
 

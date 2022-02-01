@@ -10,4 +10,9 @@ class customer extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function order()
+    {
+        return $this->hasMany(order::class)->withPivot('qty');
+    }
 }
