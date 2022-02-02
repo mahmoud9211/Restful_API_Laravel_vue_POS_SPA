@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\expense;
 use App\Models\order;
 use App\Models\product;
 use Carbon\Carbon;
@@ -55,6 +56,15 @@ class ordersController extends Controller
         $data = order::where('order_date',date('Y-m-d'))->sum('due');
 
         return response()->json($data);
+
+    }
+
+    public function today_expense()
+    {
+        $data = expense::where('date',date('Y-m-d'))->sum('amount');
+
+        return response()->json($data);
+
 
     }
 

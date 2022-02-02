@@ -17,6 +17,7 @@ class CreateExpensesTable extends Migration
             $table->id();
             $table->text('details');
             $table->float('amount',8,2);
+            $table->string('date');
             $table->timestamps();
         });
     }

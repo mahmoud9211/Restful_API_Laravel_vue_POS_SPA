@@ -30,13 +30,24 @@
           </div>
 
             <div class="form-row">
-              <div class="col-md-12">
+              <div class="col-md-6">
           <div class="form-group">
               <label> Amount ($) </label>
                   <input type="number" class="form-control form-control-user" id="exampleFirstName"
                        v-model="form.amount" >  
 
      <small class="text-danger" v-if="errors.amount"> {{errors.amount[0]}} </small>
+
+              </div>
+              </div>
+
+               <div class="col-md-6">
+          <div class="form-group">
+              <label> Date </label>
+                  <input type="date" class="form-control form-control-user" id="exampleFirstName"
+                       v-model="form.date" >  
+
+     <small class="text-danger" v-if="errors.date"> {{errors.date[0]}} </small>
 
               </div>
               </div>
@@ -83,7 +94,8 @@ export default {
       return{
           form:{
               details: null,
-              amount: null
+              amount: null,
+              date:null
             
           },
           errors:{

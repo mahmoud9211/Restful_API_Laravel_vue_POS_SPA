@@ -79,7 +79,8 @@ Route::get('/order/orderdetails/{id}',[ordersController::class,'details']);
 Route::get('/today/sell',[ordersController::class,'today_sell']);
 Route::get('/today/income',[ordersController::class,'today_income']);
 Route::get('/today/due',[ordersController::class,'today_due']);
-Route::get('/today/expense',[ordersController::class,'details']);
+Route::get('/today/expense',[ordersController::class,'today_expense']);
+
 
 
 

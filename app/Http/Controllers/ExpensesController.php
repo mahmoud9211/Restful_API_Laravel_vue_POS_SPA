@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ExpensesRequest;
 use App\Models\expense;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ExpensesController extends Controller
@@ -30,7 +31,9 @@ class ExpensesController extends Controller
 
         expense::create([
          'details' => $request->details,
-         'amount' => $request->amount
+         'amount' => $request->amount,
+         'date' => $request->date
+
         ]);
         
     }
@@ -55,7 +58,8 @@ class ExpensesController extends Controller
 
         expense::findOrFail($id)->update([
          'details' => $request->details,
-         'amount' => $request->amount
+         'amount' => $request->amount,
+         'date' => $request->date
         ]);
         
     }
