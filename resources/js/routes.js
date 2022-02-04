@@ -39,6 +39,11 @@ let today = require('./components/orders/today.vue').default;
 let orderSearch = require('./components/orders/search.vue').default;
 let orderDetails = require('./components/orders/details.vue').default;
 
+let profile = require('./components/profile/profile.vue').default;
+let editProfile = require('./components/profile/edit.vue').default;
+
+
+
 
 
 
@@ -112,6 +117,11 @@ export const routes = [
         { path: '/orders/details/:id', component: orderDetails , name : 'orderDetails' },
 
         
+         //profile
+         { path: '/profile', component: profile , name : 'profile' },
+         { path: '/profile/edit', component: editProfile , name : 'editProfile' },
+
+
 
 
 

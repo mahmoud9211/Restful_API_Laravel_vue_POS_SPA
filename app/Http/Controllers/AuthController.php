@@ -7,12 +7,14 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 
 class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','signup']]);
+        $this->middleware('jwt', ['except' => ['login','signup','me']]);
     }
 
     /**
@@ -58,8 +60,9 @@ class AuthController extends Controller
 
 
 
-    public function me()
-    {
+    public function me($token)
+    { 
+      
         return response()->json(auth()->user());
     }
 
@@ -98,7 +101,9 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'name' => Auth::user()->name
+            'name' => Auth::user()->name,
+            'email' => Auth::user()->email,
+
         ]);
     }
 }

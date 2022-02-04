@@ -12,6 +12,7 @@ use App\Http\Controllers\HelperController;
 use App\Http\Controllers\ordersController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\profileController;
 use App\Http\Controllers\SuppliersController;
 
 /*
@@ -37,6 +38,13 @@ Route::group([
     Route::post('logout', [AuthController::class,'logout']);
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
+
+    Route::post('/profile{token}',[profileController::class,'profile']);
+    Route::get('/profile/edit{token}',[profileController::class,'edit']);
+    Route::post('/profile/update{token}',[profileController::class,'update']);
+
+
+
 
 });
 
@@ -82,6 +90,8 @@ Route::get('/today/due',[ordersController::class,'today_due']);
 Route::get('/today/expense',[ordersController::class,'today_expense']);
 
 Route::post('/order/search',[ordersController::class,'order_search']);
+
+
 
 
 
