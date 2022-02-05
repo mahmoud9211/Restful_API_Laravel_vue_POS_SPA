@@ -42,6 +42,8 @@ Route::group([
     Route::post('/profile{token}',[profileController::class,'profile']);
     Route::get('/profile/edit{token}',[profileController::class,'edit']);
     Route::post('/profile/update{token}',[profileController::class,'update']);
+    Route::post('/profile/password{token}',[profileController::class,'password']);
+
 
 
 

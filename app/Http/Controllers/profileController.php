@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 
 
@@ -140,13 +141,49 @@ class profileController extends Controller
 
 }
 
+public function password(Request $request,$token)
+{
+    $validation = $request->validate([
+        'oldpassword' => 'required',
+        'password' => 'required|confirmed'
+    ]);
+
+    if (! $token = JWTAuth::parseToken()) {
+        //throw an exception
+        return response()->json(['error' => 'Incorrect Email Or Password'], 401);
+
+    }
+
+    $data = User::findOrFail(auth()->id());
+
+     if(Hash::check($request->oldpassword,$data->password))
+     {
+        $data->update([
+            'password' => Hash::make($request->password)
+         ]);
+    
+     }else{
+
+        return response()->json([
+            'error' => 'The current password is not correct'
+        ]);
+     }
+
+
+
+
+     
+
+
+}
+
 
         protected function respondWithToken($token)
         {
             return response()->json([
                 'access_token' => $token,
                 'token_type' => 'bearer',
-                'expires_in' => auth()->factory()->getTTL() * 60,
+               //  'expires_in' => auth()->factory()->getTTL() * 60,
                 'name' => Auth::user()->name,
                 'email' => Auth::user()->email,
                 'phone' => Auth::user()->phone,

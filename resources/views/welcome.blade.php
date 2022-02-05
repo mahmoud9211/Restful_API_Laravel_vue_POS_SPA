@@ -436,10 +436,10 @@
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Edit Profile
                                 </router-link>
-                                <a class="dropdown-item" href="#">
+                                <router-link class="dropdown-item" to="/profile/password/change">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
+                                     Password Change
+                                </router-link>
                                 <div class="dropdown-divider"></div>
                                 <router-link class="dropdown-item" to="/logout">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

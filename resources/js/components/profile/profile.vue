@@ -113,7 +113,7 @@
   methods:{
     user()
     {
-     let token = localStorage.getItem('token');
+   let token = localStorage.getItem('token');
     axios.post('/api/auth/profile'+token)
    .then(({data}) => (this.users= data))
  

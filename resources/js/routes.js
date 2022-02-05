@@ -41,6 +41,9 @@ let orderDetails = require('./components/orders/details.vue').default;
 
 let profile = require('./components/profile/profile.vue').default;
 let editProfile = require('./components/profile/edit.vue').default;
+let passwordChange = require('./components/profile/password.vue').default;
+
+
 
 
 
@@ -120,6 +123,8 @@ export const routes = [
          //profile
          { path: '/profile', component: profile , name : 'profile' },
          { path: '/profile/edit', component: editProfile , name : 'editProfile' },
+         { path: '/profile/password/change', component: passwordChange , name : 'passwordChange' },
+
 
 
 
