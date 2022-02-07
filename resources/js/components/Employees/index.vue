@@ -28,7 +28,7 @@
     <th>Action</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody  v-if="employees && employees.data.length > 0">
 
 
 <tr  v-for="(employee,index) in search" :key="employee.id">
@@ -43,9 +43,16 @@
      </td>
 </tr>
   </tbody>
-     <pagination :data="employees" @pagination-change-page="allEmployees"></pagination>
+
+ <tbody v-else>
+  <td align="center" colspan="5">No record found.</td>
+
+  </tbody>
+
 
 </table>
+     <pagination :data="employees" @pagination-change-page="allEmployees"></pagination>
+
                         </div>
                     </div>
 </div>
@@ -95,7 +102,7 @@ export default {
 
     axios.delete('/api/employees/' +id)
     .then(()=>{
-     this.employees = this.employees.filter(employee =>{
+     this.employees.data = this.employees.data.filter(employee =>{
         return employee.id != id
       })
     })
@@ -122,7 +129,7 @@ export default {
   },computed:{
        search()
       {
-         return this.employees.filter(employee => {
+         return this.employees.data.filter(employee => {
 
           return employee.name.toLowerCase().match(this.filter.toLowerCase())
          });

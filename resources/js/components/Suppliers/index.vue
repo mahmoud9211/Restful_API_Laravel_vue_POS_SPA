@@ -27,7 +27,7 @@
     <th>Action</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody v-if="suppliers && suppliers.data.length > 0">
 
 
 <tr  v-for="(supplier,index) in search" :key="supplier.id">
@@ -41,7 +41,14 @@
      </td>
 </tr>
   </tbody>
+
+   <tbody v-else>
+  <td align="center" colspan="5">No record found.</td>
+
+  </tbody>
 </table>
+     <pagination :data="suppliers" @pagination-change-page="allSuppliers"></pagination>
+
                         </div>
                     </div>
 </div>
@@ -71,9 +78,9 @@ export default {
   },
   methods:{
 
-      allSuppliers(){
+      allSuppliers(page=1){
 
-          axios.get('/api/suppliers')
+          axios.get('/api/suppliers?page='+page)
           .then(({data}) => (this.suppliers = data))
       },
       deleteSupplier(id){
@@ -91,7 +98,7 @@ export default {
 
     axios.delete('/api/suppliers/' +id)
     .then(()=>{
-     this.suppliers = this.suppliers.filter(supplier =>{
+     this.suppliers.data = this.suppliers.data.filter(supplier =>{
         return supplier.id != id
       })
     })
@@ -118,7 +125,7 @@ export default {
   },computed:{
        search()
       {
-         return this.suppliers.filter(supplier => {
+         return this.suppliers.data.filter(supplier => {
 
           return supplier.name.toLowerCase().match(this.filter.toLowerCase())
          });

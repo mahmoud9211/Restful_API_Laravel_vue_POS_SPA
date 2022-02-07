@@ -165,19 +165,29 @@
 
         <form @submit.prevent="orderDone">
           <label>Customer Name</label>
+            <small class="text-danger" v-if="errors.customer_id"> {{errors.customer_id[0]}} </small>
+
           <select class="form-control" v-model="customer_id" >
             <option value="" disabled selected> Choose </option>
          <option  :value="customer.id" v-for="customer in customers" :key="customer.id">{{customer.name}}</option>
                  
            </select>
 
+
+
            <label>Pay</label>
-           <input type="text" class="form-control" required="" v-model="pay" >
+                      <small class="text-danger" v-if="errors.pay"> {{errors.pay[0]}} </small>
+
+           <input type="text" class="form-control"  v-model="pay" >
 
            <label>Due</label>
-           <input type="text" class="form-control" required="" v-model="due" >
+            <small class="text-danger" v-if="errors.due"> {{errors.due[0]}} </small>
+
+           <input type="text" class="form-control"  v-model="due" >
 
           <label>Pay By</label>
+       <small class="text-danger" v-if="errors.payment_method"> {{errors.payment_method[0]}} </small>
+
           <select class="form-control" v-model="payment_method">
                  <option value="HandCash">Cash </option>
                  <option value="visa-master">Visa/MasterCard </option>
@@ -243,7 +253,8 @@ export default {
           customer_id: '',
           pay: '',
           due: '',
-          payment_method: ''
+          payment_method: '',
+          errors:{}
           
       }
   },
@@ -332,6 +343,7 @@ export default {
           Toastermsg.successmsg('Order Done')
           this.$router.push({name:'home'})
         })
+        .catch(error=> this.errors =error.response.data.errors)
 
       }
  

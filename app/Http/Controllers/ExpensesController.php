@@ -12,7 +12,7 @@ class ExpensesController extends Controller
     
     public function index()
     {
-        $data = expense::latest()->paginate(10);
+        $data = expense::paginate(10);
 
         return response()->json($data);
         

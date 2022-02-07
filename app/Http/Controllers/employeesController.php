@@ -12,7 +12,7 @@ class employeesController extends Controller
    
     public function index()
     {
-        $data = employee::paginate(1);
+        $data = employee::paginate(10);
 
         return response()->json($data);
     }

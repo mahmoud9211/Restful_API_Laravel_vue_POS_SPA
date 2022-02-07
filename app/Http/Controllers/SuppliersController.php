@@ -12,7 +12,7 @@ class SuppliersController extends Controller
   
     public function index()
     {
-        $data = supplier::get();
+        $data = supplier::paginate(10);
 
         return response()->json($data);
     }

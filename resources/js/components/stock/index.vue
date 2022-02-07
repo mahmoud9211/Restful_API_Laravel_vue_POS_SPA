@@ -28,10 +28,10 @@
     <th>Action</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody v-if="products && products.data.length > 0">
 
 
-<tr  v-for="(product,index) in products" :key="product.id">
+<tr  v-for="(product,index) in search" :key="product.id">
     <td> {{index +1}} </td>
      <td> {{product.name}} </td>
     <td><img :src="product.image" id="emp-img"></td>
@@ -46,7 +46,13 @@
      </td>
 </tr>
   </tbody>
+
+ <tbody v-else>
+  <td align="center" colspan="5">No record found.</td>
+
+  </tbody>
 </table>
+     <pagination :data="products" @pagination-change-page="allProducts"></pagination>
                         </div>
                     </div>
 </div>
@@ -76,9 +82,9 @@ export default {
   },
   methods:{
 
-      allProducts(){
+      allProducts(page=1){
 
-          axios.get('/api/products')
+          axios.get('/api/products?page='+page)
           .then(({data}) => (this.products = data))
       },
  
@@ -89,7 +95,7 @@ export default {
   },computed:{
        search()
       {
-         return this.products.filter(product => {
+         return this.products.data.filter(product => {
 
           return product.name.toLowerCase().match(this.filter.toLowerCase())
          });

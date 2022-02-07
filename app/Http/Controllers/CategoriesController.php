@@ -11,7 +11,7 @@ class CategoriesController extends Controller
 
     public function index()
     {
-        $data = category::paginate(5);
+        $data = category::paginate(10);
 
         return response()->json($data);
     }

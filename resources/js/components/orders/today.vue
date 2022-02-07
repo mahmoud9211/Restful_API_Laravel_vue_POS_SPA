@@ -4,7 +4,6 @@
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Orders</h1>
 
-    <input type="email" class="form-control" v-model="filter" id="search" placeholder="search by name">
 
                   <br>
                   <br>
@@ -62,8 +61,7 @@ export default {
       return{
           orders:[
 
-          ],
-          filter : ''
+          ]
       }
   },
   methods:{
@@ -78,14 +76,6 @@ export default {
   },
   created(){
      this.allOrders();
-  },computed:{
-       search()
-      {
-         return this.products.filter(product => {
-
-          return product.name.toLowerCase().match(this.filter.toLowerCase())
-         });
-      }
   }
 
 

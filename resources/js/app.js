@@ -35,6 +35,8 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 
 
 
+
+
 window.Reload = new Vue();
 
 

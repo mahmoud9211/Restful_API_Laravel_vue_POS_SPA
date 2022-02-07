@@ -5758,6 +5758,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_created$data$methods = {
   created: function created() {
     if (!User.LoggedIn()) {
@@ -5796,7 +5803,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function (result) {
         if (result.isConfirmed) {
           axios["delete"]('/api/employees/' + id).then(function () {
-            _this2.employees = _this2.employees.filter(function (employee) {
+            _this2.employees.data = _this2.employees.data.filter(function (employee) {
               return employee.id != id;
             });
           })["catch"](function () {
@@ -5815,7 +5822,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   search: function search() {
     var _this3 = this;
 
-    return this.employees.filter(function (employee) {
+    return this.employees.data.filter(function (employee) {
       return employee.name.toLowerCase().match(_this3.filter.toLowerCase());
     });
   }
@@ -6256,6 +6263,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_created$data$methods = {
   created: function created() {
     if (!User.LoggedIn()) {
@@ -6274,7 +6288,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     allSuppliers: function allSuppliers() {
       var _this = this;
 
-      axios.get('/api/suppliers').then(function (_ref) {
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('/api/suppliers?page=' + page).then(function (_ref) {
         var data = _ref.data;
         return _this.suppliers = data;
       });
@@ -6293,7 +6308,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function (result) {
         if (result.isConfirmed) {
           axios["delete"]('/api/suppliers/' + id).then(function () {
-            _this2.suppliers = _this2.suppliers.filter(function (supplier) {
+            _this2.suppliers.data = _this2.suppliers.data.filter(function (supplier) {
               return supplier.id != id;
             });
           })["catch"](function () {
@@ -6312,7 +6327,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   search: function search() {
     var _this3 = this;
 
-    return this.suppliers.filter(function (supplier) {
+    return this.suppliers.data.filter(function (supplier) {
       return supplier.name.toLowerCase().match(_this3.filter.toLowerCase());
     });
   }
@@ -8454,8 +8469,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-var _created$data$methods;
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //
@@ -8504,8 +8517,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_created$data$methods = {
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_defineProperty({
   created: function created() {
     if (!User.LoggedIn()) {
       this.$router.push({
@@ -8515,8 +8527,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      orders: [],
-      filter: ''
+      orders: []
     };
   },
   methods: {
@@ -8529,17 +8540,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   }
-}, _defineProperty(_created$data$methods, "created", function created() {
+}, "created", function created() {
   this.allOrders();
-}), _defineProperty(_created$data$methods, "computed", {
-  search: function search() {
-    var _this2 = this;
-
-    return this.products.filter(function (product) {
-      return product.name.toLowerCase().match(_this2.filter.toLowerCase());
-    });
-  }
-}), _created$data$methods);
+}));
 
 /***/ }),
 
@@ -8558,6 +8561,16 @@ var _created$data$created;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -8798,7 +8811,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       customer_id: '',
       pay: '',
       due: '',
-      payment_method: ''
+      payment_method: '',
+      errors: {}
     };
   }
 }, _defineProperty(_created$data$created, "created", function created() {
@@ -8892,6 +8906,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _this7.$router.push({
         name: 'home'
       });
+    })["catch"](function (error) {
+      return _this7.errors = error.response.data.errors;
     });
   }
 }), _defineProperty(_created$data$created, "computed", {
@@ -9538,6 +9554,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_created$data$methods = {
   created: function created() {
     if (!User.LoggedIn()) {
@@ -9556,7 +9578,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     allProducts: function allProducts() {
       var _this = this;
 
-      axios.get('/api/products').then(function (_ref) {
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('/api/products?page=' + page).then(function (_ref) {
         var data = _ref.data;
         return _this.products = data;
       });
@@ -9575,7 +9598,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function (result) {
         if (result.isConfirmed) {
           axios["delete"]('/api/products/' + id).then(function () {
-            _this2.products = _this2.products.filter(function (product) {
+            _this2.products.data = _this2.products.data.filter(function (product) {
               return product.id != id;
             });
           })["catch"](function () {
@@ -9594,7 +9617,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   search: function search() {
     var _this3 = this;
 
-    return this.products.filter(function (product) {
+    return this.products.data.filter(function (product) {
       return product.name.toLowerCase().match(_this3.filter.toLowerCase());
     });
   }
@@ -10278,6 +10301,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_created$data$methods = {
   created: function created() {
     if (!User.LoggedIn()) {
@@ -10296,7 +10325,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     allProducts: function allProducts() {
       var _this = this;
 
-      axios.get('/api/products').then(function (_ref) {
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('/api/products?page=' + page).then(function (_ref) {
         var data = _ref.data;
         return _this.products = data;
       });
@@ -10308,7 +10338,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   search: function search() {
     var _this2 = this;
 
-    return this.products.filter(function (product) {
+    return this.products.data.filter(function (product) {
       return product.name.toLowerCase().match(_this2.filter.toLowerCase());
     });
   }
@@ -44528,89 +44558,95 @@ var render = function () {
       _c("div", { staticClass: "card shadow mb-4" }, [
         _vm._m(0),
         _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c(
-            "table",
-            { staticClass: "table" },
-            [
+        _c(
+          "div",
+          { staticClass: "card-body" },
+          [
+            _c("table", { staticClass: "table" }, [
               _vm._m(1),
               _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.search, function (employee, index) {
-                  return _c("tr", { key: employee.id }, [
-                    _c("td", [_vm._v(" " + _vm._s(index + 1) + " ")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(employee.name))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("img", {
-                        attrs: {
-                          src:
-                            employee.image == null
-                              ? "/uploads/employees/noimg.png"
-                              : employee.image,
-                          id: "emp-img",
-                        },
-                      }),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(employee.phone))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(employee.joining_date))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(employee.salary))]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            staticClass: "btn btn-sm btn-info",
+              _vm.employees && _vm.employees.data.length > 0
+                ? _c(
+                    "tbody",
+                    _vm._l(_vm.search, function (employee, index) {
+                      return _c("tr", { key: employee.id }, [
+                        _c("td", [_vm._v(" " + _vm._s(index + 1) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(employee.name))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("img", {
                             attrs: {
-                              to: {
-                                name: "editEmployees",
-                                params: { id: employee.id },
-                              },
+                              src:
+                                employee.image == null
+                                  ? "/uploads/employees/noimg.png"
+                                  : employee.image,
+                              id: "emp-img",
                             },
-                          },
+                          }),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(employee.phone))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(employee.joining_date))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(employee.salary))]),
+                        _vm._v(" "),
+                        _c(
+                          "td",
                           [
-                            _c("font", { attrs: { color: "white" } }, [
-                              _vm._v(" Edit "),
-                            ]),
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "btn btn-sm btn-info",
+                                attrs: {
+                                  to: {
+                                    name: "editEmployees",
+                                    params: { id: employee.id },
+                                  },
+                                },
+                              },
+                              [
+                                _c("font", { attrs: { color: "white" } }, [
+                                  _vm._v(" Edit "),
+                                ]),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-sm btn-danger",
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.deleteEmployee(employee.id)
+                                  },
+                                },
+                              },
+                              [_vm._v(" Delete ")]
+                            ),
                           ],
                           1
                         ),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-sm btn-danger",
-                            on: {
-                              click: function ($event) {
-                                return _vm.deleteEmployee(employee.id)
-                              },
-                            },
-                          },
-                          [_vm._v(" Delete ")]
-                        ),
-                      ],
-                      1
-                    ),
-                  ])
-                }),
-                0
-              ),
-              _vm._v(" "),
-              _c("pagination", {
-                attrs: { data: _vm.employees },
-                on: { "pagination-change-page": _vm.allEmployees },
-              }),
-            ],
-            1
-          ),
-        ]),
+                      ])
+                    }),
+                    0
+                  )
+                : _c("tbody", [
+                    _c("td", { attrs: { align: "center", colspan: "5" } }, [
+                      _vm._v("No record found."),
+                    ]),
+                  ]),
+            ]),
+            _vm._v(" "),
+            _c("pagination", {
+              attrs: { data: _vm.employees },
+              on: { "pagination-change-page": _vm.allEmployees },
+            }),
+          ],
+          1
+        ),
       ]),
     ],
     1
@@ -45283,77 +45319,93 @@ var render = function () {
       _c("div", { staticClass: "card shadow mb-4" }, [
         _vm._m(0),
         _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c("table", { staticClass: "table" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.search, function (supplier, index) {
-                return _c("tr", { key: supplier.id }, [
-                  _c("td", [_vm._v(" " + _vm._s(index + 1) + " ")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(supplier.name))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("img", {
-                      attrs: {
-                        src:
-                          supplier.image == null
-                            ? "/uploads/suppliers/noimg.png"
-                            : supplier.image,
-                        id: "emp-img",
-                      },
+        _c(
+          "div",
+          { staticClass: "card-body" },
+          [
+            _c("table", { staticClass: "table" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _vm.suppliers && _vm.suppliers.data.length > 0
+                ? _c(
+                    "tbody",
+                    _vm._l(_vm.search, function (supplier, index) {
+                      return _c("tr", { key: supplier.id }, [
+                        _c("td", [_vm._v(" " + _vm._s(index + 1) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(supplier.name))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("img", {
+                            attrs: {
+                              src:
+                                supplier.image == null
+                                  ? "/uploads/suppliers/noimg.png"
+                                  : supplier.image,
+                              id: "emp-img",
+                            },
+                          }),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(supplier.phone))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(supplier.email))]),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "btn btn-sm btn-info",
+                                attrs: {
+                                  to: {
+                                    name: "editSuppliers",
+                                    params: { id: supplier.id },
+                                  },
+                                },
+                              },
+                              [
+                                _c("font", { attrs: { color: "white" } }, [
+                                  _vm._v(" Edit "),
+                                ]),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-sm btn-danger",
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.deleteSupplier(supplier.id)
+                                  },
+                                },
+                              },
+                              [_vm._v(" Delete ")]
+                            ),
+                          ],
+                          1
+                        ),
+                      ])
                     }),
+                    0
+                  )
+                : _c("tbody", [
+                    _c("td", { attrs: { align: "center", colspan: "5" } }, [
+                      _vm._v("No record found."),
+                    ]),
                   ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(supplier.phone))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(supplier.email))]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-sm btn-info",
-                          attrs: {
-                            to: {
-                              name: "editSuppliers",
-                              params: { id: supplier.id },
-                            },
-                          },
-                        },
-                        [
-                          _c("font", { attrs: { color: "white" } }, [
-                            _vm._v(" Edit "),
-                          ]),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-sm btn-danger",
-                          on: {
-                            click: function ($event) {
-                              return _vm.deleteSupplier(supplier.id)
-                            },
-                          },
-                        },
-                        [_vm._v(" Delete ")]
-                      ),
-                    ],
-                    1
-                  ),
-                ])
-              }),
-              0
-            ),
-          ]),
-        ]),
+            ]),
+            _vm._v(" "),
+            _c("pagination", {
+              attrs: { data: _vm.suppliers },
+              on: { "pagination-change-page": _vm.allSuppliers },
+            }),
+          ],
+          1
+        ),
       ]),
     ],
     1
@@ -47788,7 +47840,7 @@ var render = function () {
             [
               _c(
                 "router-link",
-                { staticClass: "dlink", attrs: { to: "/orders" } },
+                { staticClass: "dlink", attrs: { to: "/orders/search" } },
                 [
                   _c(
                     "div",
@@ -48408,28 +48460,6 @@ var render = function () {
   return _c("div", [
     _c("h1", { staticClass: "h3 mb-2 text-gray-800" }, [_vm._v("Orders")]),
     _vm._v(" "),
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.filter,
-          expression: "filter",
-        },
-      ],
-      staticClass: "form-control",
-      attrs: { type: "email", id: "search", placeholder: "search by name" },
-      domProps: { value: _vm.filter },
-      on: {
-        input: function ($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.filter = $event.target.value
-        },
-      },
-    }),
-    _vm._v(" "),
     _c("br"),
     _vm._v(" "),
     _c("br"),
@@ -48964,6 +48994,12 @@ var render = function () {
                   [
                     _c("label", [_vm._v("Customer Name")]),
                     _vm._v(" "),
+                    _vm.errors.customer_id
+                      ? _c("small", { staticClass: "text-danger" }, [
+                          _vm._v(" " + _vm._s(_vm.errors.customer_id[0]) + " "),
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
                     _c(
                       "select",
                       {
@@ -49015,6 +49051,12 @@ var render = function () {
                     _vm._v(" "),
                     _c("label", [_vm._v("Pay")]),
                     _vm._v(" "),
+                    _vm.errors.pay
+                      ? _c("small", { staticClass: "text-danger" }, [
+                          _vm._v(" " + _vm._s(_vm.errors.pay[0]) + " "),
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
                     _c("input", {
                       directives: [
                         {
@@ -49025,7 +49067,7 @@ var render = function () {
                         },
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text", required: "" },
+                      attrs: { type: "text" },
                       domProps: { value: _vm.pay },
                       on: {
                         input: function ($event) {
@@ -49039,6 +49081,12 @@ var render = function () {
                     _vm._v(" "),
                     _c("label", [_vm._v("Due")]),
                     _vm._v(" "),
+                    _vm.errors.due
+                      ? _c("small", { staticClass: "text-danger" }, [
+                          _vm._v(" " + _vm._s(_vm.errors.due[0]) + " "),
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
                     _c("input", {
                       directives: [
                         {
@@ -49049,7 +49097,7 @@ var render = function () {
                         },
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text", required: "" },
+                      attrs: { type: "text" },
                       domProps: { value: _vm.due },
                       on: {
                         input: function ($event) {
@@ -49062,6 +49110,14 @@ var render = function () {
                     }),
                     _vm._v(" "),
                     _c("label", [_vm._v("Pay By")]),
+                    _vm._v(" "),
+                    _vm.errors.payment_method
+                      ? _c("small", { staticClass: "text-danger" }, [
+                          _vm._v(
+                            " " + _vm._s(_vm.errors.payment_method[0]) + " "
+                          ),
+                        ])
+                      : _vm._e(),
                     _vm._v(" "),
                     _c(
                       "select",
@@ -50373,75 +50429,93 @@ var render = function () {
       _c("div", { staticClass: "card shadow mb-4" }, [
         _vm._m(0),
         _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c("table", { staticClass: "table" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.products, function (product, index) {
-                return _c("tr", { key: product.id }, [
-                  _c("td", [_vm._v(" " + _vm._s(index + 1) + " ")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(" " + _vm._s(product.name) + " ")]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("img", { attrs: { src: product.image, id: "emp-img" } }),
+        _c(
+          "div",
+          { staticClass: "card-body" },
+          [
+            _c("table", { staticClass: "table" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _vm.products && _vm.products.data.length > 0
+                ? _c(
+                    "tbody",
+                    _vm._l(_vm.search, function (product, index) {
+                      return _c("tr", { key: product.id }, [
+                        _c("td", [_vm._v(" " + _vm._s(index + 1) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(product.name) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("img", {
+                            attrs: { src: product.image, id: "emp-img" },
+                          }),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(product.code))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(product.category.name))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(product.purchase_price))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(product.selling_price))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(product.profit_percentage))]),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "btn btn-sm btn-info",
+                                attrs: {
+                                  to: {
+                                    name: "editProducts",
+                                    params: { id: product.id },
+                                  },
+                                },
+                              },
+                              [
+                                _c("font", { attrs: { color: "white" } }, [
+                                  _vm._v(" Edit "),
+                                ]),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-sm btn-danger",
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.deleteProduct(product.id)
+                                  },
+                                },
+                              },
+                              [_vm._v(" Delete ")]
+                            ),
+                          ],
+                          1
+                        ),
+                      ])
+                    }),
+                    0
+                  )
+                : _c("tbody", [
+                    _c("td", { attrs: { align: "center", colspan: "5" } }, [
+                      _vm._v("No record found."),
+                    ]),
                   ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(product.code))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(product.category.name))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(product.purchase_price))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(product.selling_price))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(product.profit_percentage))]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-sm btn-info",
-                          attrs: {
-                            to: {
-                              name: "editProducts",
-                              params: { id: product.id },
-                            },
-                          },
-                        },
-                        [
-                          _c("font", { attrs: { color: "white" } }, [
-                            _vm._v(" Edit "),
-                          ]),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-sm btn-danger",
-                          on: {
-                            click: function ($event) {
-                              return _vm.deleteProduct(product.id)
-                            },
-                          },
-                        },
-                        [_vm._v(" Delete ")]
-                      ),
-                    ],
-                    1
-                  ),
-                ])
-              }),
-              0
-            ),
-          ]),
-        ]),
+            ]),
+            _vm._v(" "),
+            _c("pagination", {
+              attrs: { data: _vm.products },
+              on: { "pagination-change-page": _vm.allProducts },
+            }),
+          ],
+          1
+        ),
       ]),
     ],
     1
@@ -51439,67 +51513,88 @@ var render = function () {
     _c("div", { staticClass: "card shadow mb-4" }, [
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("table", { staticClass: "table" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.products, function (product, index) {
-              return _c("tr", { key: product.id }, [
-                _c("td", [_vm._v(" " + _vm._s(index + 1) + " ")]),
-                _vm._v(" "),
-                _c("td", [_vm._v(" " + _vm._s(product.name) + " ")]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("img", { attrs: { src: product.image, id: "emp-img" } }),
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(product.code))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(product.category.name))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(product.qty))]),
-                _vm._v(" "),
-                product.qty > 0
-                  ? _c("td", [
-                      _c("span", { staticClass: "badge badge-success" }, [
-                        _vm._v("Available "),
+      _c(
+        "div",
+        { staticClass: "card-body" },
+        [
+          _c("table", { staticClass: "table" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _vm.products && _vm.products.data.length > 0
+              ? _c(
+                  "tbody",
+                  _vm._l(_vm.search, function (product, index) {
+                    return _c("tr", { key: product.id }, [
+                      _c("td", [_vm._v(" " + _vm._s(index + 1) + " ")]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(" " + _vm._s(product.name) + " ")]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("img", {
+                          attrs: { src: product.image, id: "emp-img" },
+                        }),
                       ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(product.code))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(product.category.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(product.qty))]),
+                      _vm._v(" "),
+                      product.qty > 0
+                        ? _c("td", [
+                            _c("span", { staticClass: "badge badge-success" }, [
+                              _vm._v("Available "),
+                            ]),
+                          ])
+                        : _c("td", [
+                            _c("span", { staticClass: "badge badge-danger" }, [
+                              _vm._v("Not Available "),
+                            ]),
+                          ]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "btn btn-sm btn-info",
+                              attrs: {
+                                to: {
+                                  name: "editStock",
+                                  params: { id: product.id },
+                                },
+                              },
+                            },
+                            [
+                              _c("font", { attrs: { color: "white" } }, [
+                                _vm._v(" Edit "),
+                              ]),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
                     ])
-                  : _c("td", [
-                      _c("span", { staticClass: "badge badge-danger" }, [
-                        _vm._v("Not Available "),
-                      ]),
-                    ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-sm btn-info",
-                        attrs: {
-                          to: { name: "editStock", params: { id: product.id } },
-                        },
-                      },
-                      [
-                        _c("font", { attrs: { color: "white" } }, [
-                          _vm._v(" Edit "),
-                        ]),
-                      ],
-                      1
-                    ),
-                  ],
-                  1
-                ),
-              ])
-            }),
-            0
-          ),
-        ]),
-      ]),
+                  }),
+                  0
+                )
+              : _c("tbody", [
+                  _c("td", { attrs: { align: "center", colspan: "5" } }, [
+                    _vm._v("No record found."),
+                  ]),
+                ]),
+          ]),
+          _vm._v(" "),
+          _c("pagination", {
+            attrs: { data: _vm.products },
+            on: { "pagination-change-page": _vm.allProducts },
+          }),
+        ],
+        1
+      ),
     ]),
   ])
 }

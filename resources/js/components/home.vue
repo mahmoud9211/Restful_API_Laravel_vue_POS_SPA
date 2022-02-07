@@ -150,7 +150,7 @@
                     </router-link>
                 </div>
                 <div class="col-lg-6 mb-4">
-                     <router-link to="/orders" class="dlink">
+                     <router-link to="/orders/search" class="dlink">
                     <div class="card bg-secondary text-white shadow">
                         <div class="card-body">
                             Orders

@@ -15,7 +15,7 @@ class CustomersController extends Controller
      */
     public function index()
     {
-        $data = customer::latest()->paginate(10);
+        $data = customer::paginate(10);
         return response()->json($data);
     }
 
